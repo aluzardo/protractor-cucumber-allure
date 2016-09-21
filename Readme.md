@@ -1,4 +1,6 @@
-###Protractor-Cucumber-Allure Setup Guide
+###Protractor-Cucumber-Allure Setup Guide   
+ [![Build Status](https://travis-ci.org/igniteram/protractor-cucumber-allure.svg?branch=master)](https://travis-ci.org/igniteram/protractor-cucumber-allure)
+
 This project demonstrates the basic protractor-cucumber framework project setup with Jenkins CI and Allure Reports integration
 
 ###Features
@@ -6,6 +8,7 @@ This project demonstrates the basic protractor-cucumber framework project setup 
 * Page Object design pattern implementation
 * DirectConnect capability for Chrome & Firefox browsers
 * Extensive hooks implemented for BeforeFeature, AfterFeature, AfterScenarios etc.
+* MultiCapabalities and Test Sharding example
 * Screenshots on failure feature scenarios
 * PosgreSQL database connection feature example
 * Support for cucumber-html-reports
@@ -43,7 +46,7 @@ https://nodejs.org/en/download/
 
 ####Writing Step Definitions
 >     var homePage = function () {
-     'use strict';
+     "use strict";
     var search = new searchPage(); 
     this.Given(/^I am on google page$/, function () {
      return expect(search.title()).to.eventually.equal('Google');
@@ -53,17 +56,10 @@ https://nodejs.org/en/download/
 ####Writing Page Objects
 >     var googleSearch = function () {
     "use strict";
-    this.title = function () {
-    return browser.driver.getTitle();
-    }; 
-    this.searchTextBox= function (text) {
-        $("input[name='q']").sendKeys(text);
-    };
+    this.searchTextBox = $("input[name='q']");
     this.searchButton = $("button[name='btnG']");
-    this.clearText= function () {
-        $("input[name='q']").clear();
-    };
-    };
+      };
+    module.exports = googleSearch;
 
 ####Cucumber Hooks
 Following method takes screenshot on failure of each scenario
@@ -90,7 +86,7 @@ Following configuration shows to call specific tags from feature files
     strict: true,
     plugin: ["pretty"],
     require: ['../StepDefinitions/*.js', '../Support/*.js'],
-    tags: '@Regression,@ProtractorScenario,@AllureScenario'
+    tags: '@CucumberScenario,@ProtractorScenario,@AllureScenario'
     }
 
 ####Database Connection
