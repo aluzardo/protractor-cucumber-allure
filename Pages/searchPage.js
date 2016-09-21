@@ -5,7 +5,7 @@ var googleSearch = function () {
         return browser.driver.getTitle();
     };
     this.searchTextBox = function (text) {
-        $("input[name='q']").sendKeys(text);
+       $("input[name='qNoElementFound']").sendKeys(text);
     };
     this.searchButton = $("button[name='btnG']");
     this.clearText = function () {
